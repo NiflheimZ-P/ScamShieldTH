@@ -24,6 +24,7 @@ from app.api.schemas import ScanRequest
 from app.config import get_settings
 from app.llm.client import get_llm_client
 from app.repositories.advisories import AdvisoryRepository
+from app.repositories.brands import BrandRepository
 from app.repositories.indicators import IndicatorRepository
 
 log = logging.getLogger(__name__)
@@ -46,7 +47,7 @@ def build_toolbox(use_rag: bool = True, mode: str | None = None, min_score: floa
         )
     elif use_rag:
         log.warning("advisory index missing — running without search_advisories (scripts/build_index.py)")
-    return Toolbox(indicators, search)
+    return Toolbox(indicators, search, BrandRepository(s.brands_csv))
 
 
 @lru_cache

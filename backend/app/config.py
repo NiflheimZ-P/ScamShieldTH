@@ -19,11 +19,12 @@ class Settings(BaseSettings):
 
     data_dir: Path = REPO_ROOT / "data"
     indicators_csv: Path = REPO_ROOT / "data" / "indicators" / "seed.csv"
+    brands_csv: Path = REPO_ROOT / "data" / "indicators" / "brands.csv"
     indicators_db: Path = REPO_ROOT / "data" / "index" / "indicators.sqlite"  # built from the CSV
     agent_max_steps: int = 6
     verdict_max_repairs: int = 2
-    retrieval_mode: str = "hybrid"  # dense | bm25 | hybrid — chosen on the eval set, see eval/run_retrieval.py
-    min_score: float = 0.45  # dense-cosine gate, tuned on the eval set — see eval/run_retrieval.py
+    retrieval_mode: str = "hybrid"  # dense | bm25 | hybrid — hybrid won on the dev split, see eval/run_retrieval.py
+    min_score: float = 0.40  # dense-cosine gate, chosen on the dev split (R@3 0.773 vs 0.636 at 0.45) — eval/run_retrieval.py
 
 
 @lru_cache

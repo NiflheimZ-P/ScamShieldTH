@@ -13,6 +13,8 @@ import asyncio
 import json
 from pathlib import Path
 
+import openai
+
 from app.agent.loop import run_agent
 from app.agent.tools import Toolbox
 from app.agent.verdict import VerdictError
@@ -47,6 +49,19 @@ async def run_one(item: dict, toolbox: Toolbox, use_tools: bool) -> dict:
     return out
 
 
+async def run_patiently(item: dict, toolbox: Toolbox, use_tools: bool) -> dict:
+    """The class proxy caps tokens per short window; wait it out instead of losing the item."""
+    for attempt in range(4):
+        try:
+            return await run_one(item, toolbox, use_tools)
+        except openai.RateLimitError:
+            if attempt == 3:
+                raise
+            print(f"  rate-limited on {item['id']}, waiting 60s", flush=True)
+            await asyncio.sleep(60)
+    raise AssertionError("unreachable")
+
+
 async def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", default="dev")
@@ -62,7 +77,7 @@ async def main() -> None:
         print(f"skipping {len(skipped)} needs_review items (use --include-review): {', '.join(skipped)}")
     toolbox = build_toolbox(use_rag=a.mode == "agent")
     # sequential: the proxy is shared by the whole class
-    results = [await run_one(it, toolbox, use_tools=a.mode != "baseline") for it in items]
+    results = [await run_patiently(it, toolbox, use_tools=a.mode != "baseline") for it in items]
 
     RESULTS_DIR.mkdir(exist_ok=True)
     out_path = RESULTS_DIR / f"{a.split}-{a.mode}.jsonl"

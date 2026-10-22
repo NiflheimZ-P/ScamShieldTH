@@ -17,6 +17,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 from app.rag.embed import embed_query
 from app.rag.hybrid import Mode, Retriever, top_docs
+from app.repositories.brands import BrandRepository
 from app.repositories.indicators import Indicator, IndicatorRepository
 
 
@@ -308,7 +309,7 @@ async def search_advisories(cfg: SearchConfig, args: SearchAdvisoriesArgs) -> To
         content = {"results": [], "note": "no advisory is similar enough to this query"}
         return ToolResult(json.dumps(content, ensure_ascii=False), "ไม่พบคำเตือนทางการที่ตรงกับข้อความนี้", "info")
     results = [
-        {"n": i, "title": h.chunk.title, "source": h.chunk.source, "excerpt": h.chunk.text[:700]}
+        {"n": i, "title": h.chunk.title, "source": h.chunk.source, "excerpt": h.chunk.text[:400]}
         for i, h in enumerate(hits, 1)
     ]
     cites = tuple({"title": h.chunk.title, "source": h.chunk.source, "url": h.chunk.url} for h in hits)
@@ -327,9 +328,14 @@ class Toolbox:
     """Allow-listed dispatch. Unknown tools and bad arguments come back as error results.
     `search_advisories` is offered only when a search config (i.e. a built index) is given."""
 
-    def __init__(self, repo: IndicatorRepository, search: SearchConfig | None = None):
+    def __init__(self, repo: IndicatorRepository, search: SearchConfig | None = None,
+                 brands: BrandRepository | None = None):
         self._repo = repo
         self._official = repo.official_domains()
+        if brands:  # brands.csv domains are official too
+            self._official += [Indicator("domain", d, "official", b.name, "brands.csv")
+                               for b in brands.brands for d in b.domains]
+        self.brands = brands
         self._search = search
         self.specs = [*TOOL_SPECS, SEARCH_SPEC] if search else list(TOOL_SPECS)
 

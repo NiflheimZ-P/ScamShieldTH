@@ -1,0 +1,129 @@
+===== baseline
+id       gold                   pred                   ok  tools
+test-002 phishing_link/medium   phishing_link/medium   ✓   
+test-005 fake_parcel/high       fake_parcel/high       ✓   
+test-006 gambling/high          gambling/high          ✓   
+test-008 phishing_link/medium   phishing_link/medium   ✓   
+test-010 gambling/high          gambling/high          ✓   
+test-013 job_task/high          job_task/high          ✓   
+test-016 fake_bank_or_loan/high phishing_link/high     ✗   
+test-018 legit/low              phishing_link/high     ✗   
+test-019 gambling/high          prize_lottery/high     ✗   
+test-023 fake_parcel/high       fake_parcel/high       ✓   
+test-025 phishing_link/medium   phishing_link/medium   ✓   
+test-026 fake_parcel/high       fake_parcel/medium     ✓   
+test-027 prize_lottery/high     phishing_link/high     ✗   
+test-029 phishing_link/high     phishing_link/high     ✓   
+test-030 phishing_link/medium   phishing_link/high     ✓   
+test-031 gov_impersonation/high gov_impersonation/high ✓   
+test-034 job_task/high          job_task/high          ✓   
+test-036 job_task/high          job_task/high          ✓   
+test-039 legit/low              fake_bank_or_loan/high ✗   
+test-042 legit/low              legit/low              ✓   
+test-044 legit/low              phishing_link/high     ✗   
+test-046 legit/low              legit/low              ✓   
+test-049 legit/low              legit/low              ✓   
+test-050 legit/low              legit/low              ✓   
+test-051 legit/low              legit/low              ✓   
+test-052 legit/low              legit/low              ✓   
+test-053 legit/low              legit/low              ✓   
+
+[test / baseline] n=27
+scam_type accuracy  0.778
+scam_type macro-F1  0.667
+flagged: precision 0.850  recall 1.000  f1 0.919  (tp=17 fp=3 fn=0 tn=7)
+parse failures      0   repairs used 2
+-> C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\results\test-baseline.jsonl
+===== agent_norag
+id       gold                   pred                   ok  tools
+test-002 phishing_link/medium   phishing_link/high     ✓   inspect_url(m1b.cc/w8HkXFn)
+test-005 fake_parcel/high       fake_parcel/high       ✓   inspect_url(https://7315092.cc/flashexpress/th)
+test-006 gambling/high          prize_lottery/high     ✗   inspect_url(cutt.ly/Syp8nM9s)
+test-008 phishing_link/medium   phishing_link/high     ✓   inspect_url(https://pizza.1112.to/6LNwyiy)
+test-010 gambling/high          prize_lottery/high     ✗   inspect_url(https://f2x8.com/r/SOcc28)
+test-013 job_task/high          job_task/high          ✓   check_indicator(line_id, @Emily33838); search_advisories(SMS อ้าง LinkedIn งานพาร์ทไทม์ รีโมต รายได้สูง)
+test-016 fake_bank_or_loan/high phishing_link/high     ✗   inspect_url(https://kusor.cn/tns); check_indicator(domain, kusor.cn)
+test-018 legit/low              legit/low              ✓   inspect_url(https://th.shp.ee/dlink/7vg5bzd)
+test-019 gambling/high          prize_lottery/high     ✗   inspect_url(url.in.th/IjbIS)
+test-023 fake_parcel/high       fake_parcel/high       ✓   inspect_url(www.fir-line.cc)
+test-025 phishing_link/medium   prize_lottery/high     ✗   inspect_url(https://cutt.ly/KeHfubXM)
+test-026 fake_parcel/high       fake_parcel/high       ✓   inspect_url(th-flash.com)
+test-027 prize_lottery/high     prize_lottery/high     ✓   inspect_url(https://q.datcth.cc/gob)
+test-029 phishing_link/high     phishing_link/high     ✓   inspect_url(https://telegrom-zc.com)
+test-030 phishing_link/medium   phishing_link/high     ✓   inspect_url(i9i.in/LazadaXg4g)
+test-031 gov_impersonation/high gov_impersonation/high ✓   inspect_url(www.p.ea-rth.com); check_indicator(domain, ea-rth.com)
+test-034 job_task/high          job_task/high          ✓   check_indicator(line_id, x3658)
+test-036 job_task/high          job_task/high          ✓   check_indicator(line_id, z09833); check_indicator(phone, 0934609737); search_advisories(Lazada งานเสริมออนไลน์ รายได้ 2000 บาท)
+test-039 legit/low              legit/low              ✓   inspect_url(https://link.kkpfg.com/aB3xK); check_indicator(phone, 021655555)
+test-042 legit/low              legit/low              ✓   inspect_url(https://l.lotuss.com/fest)
+test-044 legit/low              phishing_link/high     ✗   inspect_url(https://tnibe.cc/xXxXxX); check_indicator(phone, 1519); check_indicator(phone, 02-308-9388)
+test-046 legit/low              legit/low              ✓   check_indicator(phone, 7896610000004821); inspect_url(privacy@bangchak.co.th)
+test-049 legit/low              legit/low              ✓   inspect_url(app.onesiam.com/HBDSepWN)
+test-050 legit/low              legit/low              ✓   inspect_url(https://m.ais.co.th/HBOGO); inspect_url(https://m.ais.co.th/ppp)
+test-051 legit/low              legit/low              ✓   inspect_url(https://m.ais.co.th/smschfebTH); inspect_url(m.ais.co.th/6yHweKdh8)
+test-052 legit/low              legit/low              ✓   inspect_url(https://m.ais.co.th/xxH8j9u2); inspect_url(https://m.ais.co.th/ppp)
+test-053 legit/low              legit/low              ✓   inspect_url(https://m.ais.co.th/AISFibreAssistant); inspect_url(https://m.ais.co.th/FixProblem)
+
+[test / agent_norag] n=27
+scam_type accuracy  0.778
+scam_type macro-F1  0.626
+flagged: precision 0.944  recall 1.000  f1 0.971  (tp=17 fp=1 fn=0 tn=9)
+parse failures      0   repairs used 3
+-> C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\results\test-agent_norag.jsonl
+===== agent
+id       gold                   pred                   ok  tools
+test-002 phishing_link/medium   phishing_link/high     ✓   inspect_url(m1b.cc/w8HkXFn)
+test-005 fake_parcel/high       fake_parcel/high       ✓   inspect_url(https://7315092.cc/flashexpress/th); search_advisories(SMS แจ้งพัสดุแฟลช เอ็กซ์เพรส ข้อมูลไม่ครบถ้วน ให้กรอกที่อยู่)
+test-006 gambling/high          gambling/high          ✓   inspect_url(cutt.ly/Syp8nM9s)
+test-008 phishing_link/medium   phishing_link/high     ✓   inspect_url(https://pizza.1112.to/6LNwyiy)
+test-010 gambling/high          prize_lottery/high     ✗   inspect_url(https://f2x8.com/r/SOcc28); search_advisories(ลงทะเบียนรับเงิน โหลดแอป)
+test-013 job_task/high          job_task/high          ✓   check_indicator(line_id, @Emily33838); search_advisories(รับสมัครงานออนไลน์ รายได้สูง ทำงานที่บ้าน)
+test-016 fake_bank_or_loan/high phishing_link/high     ✗   inspect_url(https://kusor.cn/tns); check_indicator(domain, kusor.cn)
+test-018 legit/low              legit/low              ✓   inspect_url(https://th.shp.ee/dlink/7vg5bzd); check_indicator(domain, shp.ee)
+test-019 gambling/high          gambling/high          ✓   inspect_url(url.in.th/IjbIS); search_advisories(โปรโมชั่น OK8G รับฟรี 50)
+test-023 fake_parcel/high       fake_parcel/high       ✓   inspect_url(www.fir-line.cc); search_advisories(SMS แจ้งพัสดุจัดส่งไม่ได้ ให้ตรวจสอบสถานะผ่านลิงก์)
+test-025 phishing_link/medium   prize_lottery/high     ✗   inspect_url(https://cutt.ly/KeHfubXM)
+test-026 fake_parcel/high       fake_parcel/high       ✓   inspect_url(th-flash.com); search_advisories(SMS แจ้งพัสดุนำส่งไม่สำเร็จ ให้ติดต่อเว็บไซต์)
+test-027 prize_lottery/high     prize_lottery/high     ✓   inspect_url(https://q.datcth.cc/gob); search_advisories(คะแนนแลกของรางวัล)
+test-029 phishing_link/high     phishing_link/high     ✓   inspect_url(https://telegrom-zc.com); search_advisories(Telegram แจ้งเตือนบัญชีถูกระงับ ให้ล็อกอินผ่านลิงก์)
+test-030 phishing_link/medium   phishing_link/high     ✓   inspect_url(i9i.in/LazadaXg4g)
+test-031 gov_impersonation/high gov_impersonation/high ✓   search_advisories(SMS แจ้งถอดมิเตอร์ ค่าไฟไม่สำเร็จ); inspect_url(www.p.ea-rth.com)
+test-034 job_task/high          job_task/high          ✓   check_indicator(line_id, x3658); search_advisories(SMS เสนอเงินเดือน 10,000 บาท ผ่าน TikTok)
+test-036 job_task/high          job_task/high          ✓   check_indicator(line_id, z09833); check_indicator(phone, 0934609737); search_advisories(Lazada เสนอทำงานหารายได้เสริมออนไลน์)
+test-039 legit/low              fake_bank_or_loan/medium ✗   inspect_url(https://link.kkpfg.com/aB3xK); check_indicator(phone, 021655555); search_advisories(SMS สินเชื่อส่วนบุคคล KKP Cash Now)
+test-042 legit/low              legit/low              ✓   inspect_url(https://l.lotuss.com/fest)
+test-044 legit/low              phishing_link/high     ✗   inspect_url(https://tnibe.cc/xXxXxX); check_indicator(phone, 1519); check_indicator(phone, 02-308-9388)
+test-046 legit/low              legit/low              ✓   check_indicator(phone, 7896610000004821); inspect_url(privacy@bangchak.co.th); search_advisories(โปรโมชั่นเติมน้ำมันบางจาก รับคะแนน)
+test-049 legit/low              legit/low              ✓   inspect_url(app.onesiam.com/HBDSepWN); check_indicator(domain, onesiam.com)
+test-050 legit/low              legit/low              ✓   inspect_url(https://m.ais.co.th/HBOGO); inspect_url(https://m.ais.co.th/ppp)
+test-051 legit/low              legit/low              ✓   inspect_url(https://m.ais.co.th/smschfebTH); inspect_url(m.ais.co.th/6yHweKdh8)
+test-052 legit/low              legit/low              ✓   inspect_url(https://m.ais.co.th/xxH8j9u2); inspect_url(https://m.ais.co.th/ppp)
+test-053 legit/low              legit/low              ✓   inspect_url(https://m.ais.co.th/AISFibreAssistant); inspect_url(https://m.ais.co.th/FixProblem)
+
+[test / agent] n=27
+scam_type accuracy  0.815
+scam_type macro-F1  0.740
+flagged: precision 0.895  recall 1.000  f1 0.944  (tp=17 fp=2 fn=0 tn=8)
+parse failures      0   repairs used 3
+-> C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\results\test-agent.jsonl
+===== retrieval
+[test] 27 messages
+index      mode     gate     R@3    R@5    MRR legit-hit
+size=600   dense    0.00   0.824  0.882  0.736     1.000
+size=600   dense    0.35   0.824  0.882  0.736     1.000
+size=600   dense    0.40   0.824  0.882  0.736     0.900
+size=600   dense    0.45   0.765  0.824  0.677     0.900
+size=600   dense    0.50   0.706  0.765  0.657     0.900
+size=600   dense    0.55   0.529  0.529  0.529     0.600
+size=600   dense    0.60   0.235  0.235  0.235     0.400
+size=600   bm25     0.00   0.588  0.824  0.605     1.000
+size=600   hybrid   0.00   0.824  0.824  0.723     1.000
+size=600   hybrid   0.35   0.824  0.824  0.723     1.000
+size=600   hybrid   0.40   0.824  0.824  0.723     0.900
+size=600   hybrid   0.45   0.706  0.765  0.659     0.900
+size=600   hybrid   0.50   0.706  0.706  0.605     0.900
+size=600   hybrid   0.55   0.529  0.529  0.529     0.600
+size=600   hybrid   0.60   0.235  0.235  0.235     0.400
+(n_scam scored=17, n_legit=10)
+-> C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\results\retrieval-test.json
+DONE

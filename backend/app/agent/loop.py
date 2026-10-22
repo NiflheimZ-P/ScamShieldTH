@@ -8,6 +8,7 @@ from collections.abc import AsyncIterator
 
 from openai import AsyncOpenAI
 
+from app.agent.precheck import precheck
 from app.agent.prompts import TOOL_SYSTEM, wrap_message
 from app.agent.tools import Toolbox
 from app.agent.verdict import apply_evidence_floor, produce_verdict
@@ -26,6 +27,8 @@ async def run_agent(
 ) -> AsyncIterator[dict]:
     """use_tools=False is the zero-shot baseline: same verdict prompt, no evidence gathering."""
     trail: list[str] = []
+    if use_tools and toolbox.brands:  # code-level link/brand check; the zero-shot baseline gets none
+        trail += [f"precheck: {line}" for line in precheck(message, toolbox.brands).evidence]
     strong: list[str] = []  # evidence that forces a high-risk verdict (see apply_evidence_floor)
     citations: list[dict] = []
     advisories: list[str] = []
@@ -75,6 +78,9 @@ async def run_agent(
                     # Advisories go in their own block: they inform advice and citations, not the decision.
                     (advisories if name == "search_advisories" else trail).append(
                         f"{name}({json.dumps(args, ensure_ascii=False)}) -> {content}")
+                    if name == "search_advisories":
+                        content = result.summary  # the tool phase only needs to know it ran; saves tokens
+                        # (the class proxy caps tokens per window — full excerpts go to the verdict only)
                     yield {"type": "observation", "id": call_id, "tool": name,
                            "summary": result.summary, "tone": result.tone}
                 messages.append({"role": "tool", "tool_call_id": call_id, "content": content})

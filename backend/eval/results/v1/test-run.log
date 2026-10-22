@@ -123,3 +123,80 @@ flagged: precision 0.667  recall 1.000  f1 0.800  (tp=34 fp=17 fn=0 tn=2)
 parse failures      0   repairs used 2
 -> C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\results\test-agent_norag.jsonl
 ===== agent
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\run_eval.py", line 94, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\siwap\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\siwap\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\siwap\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\run_eval.py", line 65, in main
+    results = [await run_one(it, toolbox, use_tools=a.mode != "baseline") for it in items]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\run_eval.py", line 33, in run_one
+    async for ev in run_agent(
+    ...<10 lines>...
+            out["repairs"] = ev["repairs"]
+  File "C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\app\agent\loop.py", line 41, in run_agent
+    r = await client.chat.completions.create(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, temperature=0, messages=messages, tools=toolbox.specs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\.venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2952, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<55 lines>...
+    )
+    ^
+  File "C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\.venv\Lib\site-packages\openai\_base_client.py", line 2087, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\.venv\Lib\site-packages\openai\_base_client.py", line 1872, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit exceeded for api_key: e031e6069017fd7fea932d9b9e57350801a5354fd9194ee255a2c1412cd8d805. Limit type: tokens. Current limit: 200000, Remaining: 0. Limit resets at: 2026-10-22 17:44:31 UTC', 'type': 'None', 'param': 'None', 'code': '429'}}
+===== retrieval
+[test] 53 messages
+index      mode     gate     R@3    R@5    MRR legit-hit
+size=600   dense    0.00   0.647  0.765  0.607     1.000
+size=600   dense    0.35   0.647  0.765  0.607     1.000
+size=600   dense    0.40   0.647  0.765  0.607     0.947
+size=600   dense    0.45   0.618  0.676  0.560     0.947
+size=600   dense    0.50   0.559  0.618  0.531     0.895
+size=600   dense    0.55   0.471  0.471  0.456     0.526
+size=600   dense    0.60   0.206  0.206  0.206     0.316
+size=600   bm25     0.00   0.529  0.765  0.555     1.000
+size=600   hybrid   0.00   0.765  0.794  0.643     1.000
+size=600   hybrid   0.35   0.765  0.794  0.643     1.000
+size=600   hybrid   0.40   0.765  0.794  0.643     0.947
+size=600   hybrid   0.45   0.618  0.676  0.538     0.947
+size=600   hybrid   0.50   0.559  0.588  0.489     0.895
+size=600   hybrid   0.55   0.471  0.471  0.456     0.526
+size=600   hybrid   0.60   0.206  0.206  0.206     0.316
+size=300   dense    0.00   0.647  0.853  0.569     1.000
+size=300   dense    0.35   0.647  0.853  0.569     1.000
+size=300   dense    0.40   0.647  0.853  0.569     1.000
+size=300   dense    0.45   0.559  0.765  0.525     0.947
+size=300   dense    0.50   0.529  0.647  0.496     0.895
+size=300   dense    0.55   0.471  0.529  0.438     0.632
+size=300   dense    0.60   0.265  0.265  0.265     0.263
+size=300   bm25     0.00   0.500  0.735  0.515     1.000
+size=300   hybrid   0.00   0.676  0.735  0.648     1.000
+size=300   hybrid   0.35   0.676  0.735  0.648     1.000
+size=300   hybrid   0.40   0.676  0.735  0.649     1.000
+size=300   hybrid   0.45   0.559  0.647  0.539     0.947
+size=300   hybrid   0.50   0.588  0.588  0.503     0.895
+size=300   hybrid   0.55   0.471  0.471  0.464     0.632
+size=300   hybrid   0.60   0.265  0.265  0.265     0.263
+(n_scam scored=34, n_legit=19)
+-> C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\results\retrieval-test.json
+DONE

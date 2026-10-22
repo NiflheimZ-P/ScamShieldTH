@@ -38,8 +38,8 @@ pnpm dev                      # http://localhost:3000
 | Path | What | Committed |
 |---|---|---|
 | `data/advisories/` | 26 official scam warnings: `sources.csv` (URLs), `raw/*.txt`, `advisories.jsonl` (metadata) | yes |
-| `data/messages/` | labelled messages: `dev.jsonl` (tuning) and `test.jsonl` (reported numbers) | yes |
-| `data/indicators/seed.csv` | official domains and hotlines | yes |
+| `data/messages/` | 53 real messages (`real.jsonl`) split into `dev.jsonl` (tuning) and `test.jsonl` (reported) | yes |
+| `data/indicators/` | `seed.csv` official domains + hotlines, `brands.csv` brand names ↔ official domains | yes |
 | `data/index/` | vector index + SQLite, rebuilt by `scripts.build_index` | no (generated) |
 
 Re-download the corpus with `uv run --group fetch python -m scripts.fetch_advisories` (pages change; the committed

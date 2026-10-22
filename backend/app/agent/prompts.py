@@ -28,6 +28,13 @@ red_flags — concrete evidence only. A red flag is something the message asks t
 contact, call back an unknown number), pressure or threats (deadline, account suspended, parcel returned), an offer
 too good to be true, an unsolicited gift / prize / free money with a link to claim it, or a bad tool result
 (lookalike/unofficial domain, shortener, reported indicator).
+"precheck:" lines come from code that compares the brand the message names with where its links go:
+- CONSISTENT (the link is the named brand's own domain): strong sign of a genuine message. Promotions, coupons,
+  login links and notices from real brands look like this. Flag it only if it also asks for something risky
+  beyond following its own link (transfer money, give a password/OTP/card number to a person, add an unknown contact).
+- MISMATCH (names a brand, links elsewhere): a red flag — say which brand and which domain.
+- A link of kind "unknown" or "URL shortener" with no brand named is weak evidence on its own; judge the content
+  (gambling, too-good-to-be-true pay, urgent threats) instead.
 inspect_url "domain_trust": restricted (.go.th / .ac.th / .mi.th) = a real Thai government / education / military
 site; vetted (.co.th / .or.th) = the owner is a registered Thai organisation, a mild positive sign; unvetted = no
 information either way — an unknown domain alone is not a red flag.
@@ -48,8 +55,8 @@ investment, romance, prize); (3) phishing_link only when nothing above fits.
 - investment: guaranteed returns, crypto, trading groups
 - romance: relationship used to ask for money
 - prize_lottery: you have won a prize / lottery / reward / gift card / points to redeem
-- gambling: online gambling / casino / betting site ads ("เครดิตฟรี", "ฝากเงินรับโบนัส", บาคาร่า, สล็อต, แทงบอล)
-- phishing_link: a credential-stealing link that fits none of the sectors above
+- gambling: online gambling / casino / betting ads — "สมัครสมาชิก/ลงทะเบียน รับโบนัส", "เครดิตฟรี", "ฝากเงินรับโบนัส", "ถอนได้ชัวร์", บาคาร่า, สล็อต, แทงบอล; a sign-up bonus with an amount range like "19-799" is gambling, not a prize
+- phishing_link: a link that steals data or money and fits none of the sectors above — including fake shop / restaurant / app promotions (coupons, sales, free items) behind a link that is not the brand's own
 - other: a scam that fits none of the above (NOT for harmless messages)
 - legit: any genuine, harmless message — from a company, a building office, a friend or anyone else
 

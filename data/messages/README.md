@@ -4,10 +4,13 @@ One JSON object per line. Fields: `id`, `split`, `channel`, `message`, `is_scam`
 
 | File | Use | Rule |
 |---|---|---|
-| `dev.jsonl` | prompt iteration, smoke tests | may be looked at and tuned on freely |
-| `test.jsonl` | the reported numbers | real messages only; never used to write prompts or few-shot examples |
+| `real.jsonl` | all 53 real messages (PII redacted) | source of the split below; scored once as "v1" |
+| `dev.jsonl` | 9 synthetic + 26 real — prompt iteration, knob choice | may be looked at and tuned on freely |
+| `test.jsonl` | 27 real — the reported numbers | never used to write prompts, brand lists or pick knobs |
 
-`dev.jsonl` is synthetic (drafted with Gemini, checked by a human). It is **not** used for any reported metric.
+The split is made by `backend/scripts/split_messages.py` (seeded, stratified by scam_type). It exists because the
+v1 run on all real messages was used to diagnose false positives; see `backend/eval/results/v1/README.md`.
+Labels marked `label_basis: "user judgement"` come from the person who received the message, not from a domain check.
 
 ## What test.jsonl needs (target ≥ 30, aim 40)
 - Real messages only (your phone, family, friends) — never generated, never copied from `data/advisories/`.

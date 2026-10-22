@@ -1,0 +1,31 @@
+brand,keywords,domains,evidence
+AIS,ais|เอไอเอส|myais|ais play,ais.th|ais.co.th,https://www.ais.th
+True,truemove|true money|ทรูมูฟ|ทรูมันนี่,true.th|truemoney.com,https://www.true.th
+dtac,dtac|ดีแทค,dtac.co.th,https://www.dtac.co.th
+Shopee,shopee|ช้อปปี้,shopee.co.th|shp.ee,https://shopee.co.th (shp.ee resolves to Shopee's network per netify.ai)
+Lazada,lazada|ลาซาด้า,lazada.co.th,https://www.lazada.co.th
+Lotus's,lotus's|lotuss|โลตัส,lotuss.com,https://www.lotuss.com
+Grab,grab|grabfood|แกร็บ,grab.com,https://www.grab.com/th
+LINE,line official|ไลน์ออฟฟิเชียล,line.me|lin.ee,https://line.me
+TikTok,tiktok|ติ๊กต็อก,tiktok.com,https://www.tiktok.com
+Telegram,telegram,telegram.org|t.me,https://telegram.org
+Steam,steam,steampowered.com|steamcommunity.com,https://store.steampowered.com
+Facebook,facebook|เฟซบุ๊ก,facebook.com|fb.com,https://www.facebook.com
+ธนาคารกสิกรไทย,kbank|กสิกร|k plus,kasikornbank.com,https://www.kasikornbank.com
+ธนาคารไทยพาณิชย์,scb|ไทยพาณิชย์,scb.co.th,https://www.scb.co.th
+ธนาคารกรุงเทพ,bangkok bank|ธนาคารกรุงเทพ|bualuang,bangkokbank.com,https://www.bangkokbank.com
+ธนาคารกรุงไทย,krungthai|กรุงไทย|เป๋าตัง,krungthai.com,https://krungthai.com
+ธนาคารกรุงศรีอยุธยา,krungsri|กรุงศรี,krungsri.com,https://www.krungsri.com
+ธนาคารทหารไทยธนชาต,ttb|ทหารไทยธนชาต,ttbbank.com,https://www.ttbbank.com
+ธนาคารออมสิน,gsb|ออมสิน|mymo,gsb.or.th,https://www.gsb.or.th
+ธนาคารเกียรตินาคินภัทร,kkp|เกียรตินาคิน,kkpfg.com,https://www.kkpfg.com
+ธนชาตประกันภัย,ธนชาตประกันภัย|thanachart insurance,thanachartinsurance.co.th,https://www.thanachartinsurance.co.th
+ไปรษณีย์ไทย,thailand post|thailandpost|ไปรษณีย์ไทย,thailandpost.co.th,https://www.thailandpost.co.th
+Flash Express,flash express|แฟลช เอ็กซ์เพรส|แฟลชเอ็กซ์เพรส,flashexpress.co.th|flashexpress.com,https://www.flashexpress.co.th
+การไฟฟ้าส่วนภูมิภาค,pea|การไฟฟ้าส่วนภูมิภาค|กฟภ,pea.co.th,https://www.pea.co.th
+การไฟฟ้านครหลวง,mea|การไฟฟ้านครหลวง|กฟน,mea.or.th,https://www.mea.or.th
+กรมสรรพากร,สรรพากร|revenue department,rd.go.th,https://www.rd.go.th
+บางจาก,bangchak|บางจาก,bangchak.co.th,https://www.bangchak.co.th
+The Pizza Company,the pizza company|เดอะพิซซ่าคอมปะนี,1112.com|1112pizza.com,https://www.1112.com (en.wikipedia.org/wiki/The_Pizza_Company); 1112pizza.com seen in a genuine order SMS (dev set)
+ONESIAM,onesiam|วันสยาม,onesiam.com,https://www.onesiam.com
+Monomax,monomax|โมโนแมกซ์,monomax.me,https://www.monomax.me (AIS PLAY partner)
