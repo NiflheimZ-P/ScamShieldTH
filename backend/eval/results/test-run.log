@@ -1,0 +1,125 @@
+===== baseline
+id       gold                   pred                   ok  tools
+test-001 phishing_link/medium   prize_lottery/high     ✗   
+test-002 phishing_link/medium   phishing_link/medium   ✓   
+test-003 gambling/high          gambling/high          ✓   
+test-004 legit/low              phishing_link/medium   ✗   
+test-005 fake_parcel/high       fake_parcel/high       ✓   
+test-006 gambling/high          prize_lottery/high     ✗   
+test-007 phishing_link/medium   other/medium           ✗   
+test-008 phishing_link/medium   phishing_link/medium   ✓   
+test-009 phishing_link/medium   phishing_link/medium   ✓   
+test-010 gambling/high          prize_lottery/high     ✗   
+test-011 legit/low              phishing_link/high     ✗   
+test-012 gambling/high          gambling/high          ✓   
+test-013 job_task/high          job_task/high          ✓   
+test-014 phishing_link/medium   phishing_link/medium   ✓   
+test-015 fake_parcel/high       fake_parcel/high       ✓   
+test-016 fake_bank_or_loan/high phishing_link/high     ✗   
+test-017 legit/low              prize_lottery/high     ✗   
+test-018 legit/low              phishing_link/high     ✗   
+test-019 gambling/high          prize_lottery/high     ✗   
+test-020 legit/low              legit/low              ✓   
+test-021 fake_parcel/high       fake_parcel/high       ✓   
+test-022 gambling/high          prize_lottery/high     ✗   
+test-023 fake_parcel/high       fake_parcel/high       ✓   
+test-024 gambling/high          gambling/high          ✓   
+test-025 phishing_link/medium   phishing_link/medium   ✓   
+test-026 fake_parcel/high       fake_parcel/medium     ✓   
+test-027 prize_lottery/high     phishing_link/high     ✗   
+test-028 fake_parcel/high       fake_parcel/high       ✓   
+test-029 phishing_link/high     phishing_link/high     ✓   
+test-030 phishing_link/medium   phishing_link/medium   ✓   
+test-031 gov_impersonation/high gov_impersonation/high ✓   
+test-032 fake_bank_or_loan/high fake_bank_or_loan/high ✓   
+test-033 phishing_link/medium   phishing_link/medium   ✓   
+test-034 job_task/high          job_task/high          ✓   
+test-035 job_task/high          job_task/high          ✓   
+test-036 job_task/high          job_task/high          ✓   
+test-037 job_task/high          job_task/high          ✓   
+test-038 job_task/high          job_task/high          ✓   
+test-039 legit/low              phishing_link/high     ✗   
+test-040 legit/low              phishing_link/medium   ✗   
+test-041 legit/low              phishing_link/medium   ✗   
+test-042 legit/low              legit/low              ✓   
+test-043 legit/low              phishing_link/medium   ✗   
+test-044 legit/low              phishing_link/high     ✗   
+test-045 phishing_link/medium   phishing_link/medium   ✓   
+test-046 legit/low              legit/low              ✓   
+test-047 legit/low              phishing_link/high     ✗   
+test-048 legit/low              prize_lottery/medium   ✗   
+test-049 legit/low              prize_lottery/medium   ✗   
+test-050 legit/low              legit/low              ✓   
+test-051 legit/low              legit/low              ✓   
+test-052 legit/low              prize_lottery/medium   ✗   
+test-053 legit/low              legit/low              ✓   
+
+[test / baseline] n=53
+scam_type accuracy  0.604
+scam_type macro-F1  0.666
+flagged: precision 0.723  recall 1.000  f1 0.840  (tp=34 fp=13 fn=0 tn=6)
+parse failures      0   repairs used 3
+-> C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\results\test-baseline.jsonl
+===== agent_norag
+id       gold                   pred                   ok  tools
+test-001 phishing_link/medium   prize_lottery/high     ✗   inspect_url(m1b.cc/HgcwLFN)
+test-002 phishing_link/medium   phishing_link/high     ✓   inspect_url(m1b.cc/w8HkXFn)
+test-003 gambling/high          gambling/high          ✓   inspect_url(cutt.ly/qyabbbk2)
+test-004 legit/low              prize_lottery/medium   ✗   inspect_url(https://1112pizza.com/compensate/redeem/JTVBHE)
+test-005 fake_parcel/high       fake_parcel/high       ✓   inspect_url(https://7315092.cc/flashexpress/th)
+test-006 gambling/high          prize_lottery/high     ✗   inspect_url(cutt.ly/Syp8nM9s)
+test-007 phishing_link/medium   other/medium           ✗   inspect_url(m1b.cc/r2Nwu1y)
+test-008 phishing_link/medium   prize_lottery/medium   ✗   inspect_url(https://pizza.1112.to/6LNwyiy)
+test-009 phishing_link/medium   phishing_link/medium   ✓   inspect_url(m1b.cc/wmN7xen)
+test-010 gambling/high          prize_lottery/high     ✗   inspect_url(https://f2x8.com/r/SOcc28)
+test-011 legit/low              phishing_link/high     ✗   inspect_url(https://th.shp.ee/dlink/jg4l2fb)
+test-012 gambling/high          gambling/high          ✓   inspect_url(cutt.biz/ufa21k)
+test-013 job_task/high          job_task/high          ✓   check_indicator(line_id, @Emily33838); search_advisories(SMS อ้าง LinkedIn งานพาร์ทไทม์ รีโมต รายได้สูง)
+test-014 phishing_link/medium   prize_lottery/medium   ✗   inspect_url(https://bit.ly/4nIKZ41)
+test-015 fake_parcel/high       fake_parcel/high       ✓   inspect_url(https://add-admin.cc)
+test-016 fake_bank_or_loan/high prize_lottery/high     ✗   inspect_url(https://kusor.cn/tns); check_indicator(domain, kusor.cn)
+test-017 legit/low              prize_lottery/high     ✗   inspect_url(https://shp.ee/QwkHQu1)
+test-018 legit/low              phishing_link/high     ✗   inspect_url(https://th.shp.ee/dlink/7vg5bzd)
+test-019 gambling/high          prize_lottery/high     ✗   inspect_url(url.in.th/IjbIS)
+test-020 legit/low              legit/low              ✓   search_advisories(แบบสอบถามสำมะโนประชากรและเคหะ ลุ้นรางวัล)
+test-021 fake_parcel/high       fake_parcel/high       ✓   inspect_url(fla-line.cc)
+test-022 gambling/high          prize_lottery/high     ✗   inspect_url(khjnhg.tv/qezp)
+test-023 fake_parcel/high       fake_parcel/high       ✓   inspect_url(www.fir-line.cc)
+test-024 gambling/high          gambling/high          ✓   inspect_url(https://shorturl.asia/Z7urB); check_indicator(line_id, @ok8g)
+test-025 phishing_link/medium   prize_lottery/high     ✗   inspect_url(https://cutt.ly/KeHfubXM)
+test-026 fake_parcel/high       fake_parcel/high       ✓   inspect_url(th-flash.com)
+test-027 prize_lottery/high     prize_lottery/high     ✓   inspect_url(https://q.datcth.cc/gob)
+test-028 fake_parcel/high       fake_parcel/high       ✓   inspect_url(flashlexpress.com)
+test-029 phishing_link/high     phishing_link/high     ✓   inspect_url(https://telegrom-zc.com)
+test-030 phishing_link/medium   phishing_link/high     ✓   inspect_url(i9i.in/LazadaXg4g)
+test-031 gov_impersonation/high gov_impersonation/high ✓   inspect_url(www.p.ea-rth.com); check_indicator(domain, ea-rth.com)
+test-032 fake_bank_or_loan/high fake_bank_or_loan/high ✓   inspect_url(shorturl.asia/VJtgR)
+test-033 phishing_link/medium   prize_lottery/high     ✗   inspect_url(https://grb.to/PAY200)
+test-034 job_task/high          job_task/high          ✓   check_indicator(line_id, x3658)
+test-035 job_task/high          job_task/high          ✓   check_indicator(line_id, i1d5)
+test-036 job_task/high          job_task/high          ✓   check_indicator(line_id, z09833); check_indicator(phone, 0934609737); search_advisories(Lazada งานเสริมออนไลน์ รายได้ 2000 บาท)
+test-037 job_task/high          job_task/high          ✓   check_indicator(line_id, wawa78910); check_indicator(phone, 0631823234)
+test-038 job_task/high          job_task/high          ✓   check_indicator(line_id, k77168); check_indicator(phone, 0993438560)
+test-039 legit/low              fake_bank_or_loan/high ✗   inspect_url(https://link.kkpfg.com/aB3xK); check_indicator(phone, 021655555)
+test-040 legit/low              prize_lottery/medium   ✗   inspect_url(my.lotuss.com/rewards/clickto50)
+test-041 legit/low              prize_lottery/medium   ✗   inspect_url(https://l.lotuss.com/act13)
+test-042 legit/low              prize_lottery/medium   ✗   inspect_url(https://l.lotuss.com/fest)
+test-043 legit/low              phishing_link/medium   ✗   inspect_url(https://tniservice.thanachartinsurance.co.th/tni_image/api/image/surveyor/10000001); inspect_url(https://bit.ly/3QiwORZ); check_indicator(phone, 0800000001)
+test-044 legit/low              phishing_link/high     ✗   inspect_url(https://tnibe.cc/xXxXxX); check_indicator(phone, 1519); check_indicator(phone, 02-308-9388)
+test-045 phishing_link/medium   phishing_link/medium   ✓   inspect_url(https://lhcn.li/line/source/000000000000000000000000?m=000000000000)
+test-046 legit/low              legit/low              ✓   check_indicator(phone, 7896610000004821); inspect_url(privacy@bangchak.co.th)
+test-047 legit/low              prize_lottery/high     ✗   inspect_url(https://www.monomax.me/ais/pwd-x0x0x0)
+test-048 legit/low              prize_lottery/high     ✗   inspect_url(https://m.ais.co.th/viuottaisth)
+test-049 legit/low              prize_lottery/medium   ✗   inspect_url(app.onesiam.com/HBDSepWN)
+test-050 legit/low              phishing_link/high     ✗   inspect_url(https://m.ais.co.th/HBOGO); inspect_url(https://m.ais.co.th/ppp)
+test-051 legit/low              phishing_link/high     ✗   inspect_url(https://m.ais.co.th/smschfebTH); inspect_url(m.ais.co.th/6yHweKdh8)
+test-052 legit/low              prize_lottery/high     ✗   inspect_url(https://m.ais.co.th/xxH8j9u2); inspect_url(https://m.ais.co.th/ppp)
+test-053 legit/low              phishing_link/high     ✗   inspect_url(https://m.ais.co.th/AISFibreAssistant); inspect_url(https://m.ais.co.th/FixProblem)
+
+[test / agent_norag] n=53
+scam_type accuracy  0.472
+scam_type macro-F1  0.603
+flagged: precision 0.667  recall 1.000  f1 0.800  (tp=34 fp=17 fn=0 tn=2)
+parse failures      0   repairs used 2
+-> C:\Users\siwap\OneDrive\Desktop\Build-LLM\backend\eval\results\test-agent_norag.jsonl
+===== agent

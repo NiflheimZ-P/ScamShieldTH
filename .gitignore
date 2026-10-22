@@ -1,0 +1,36 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# node / next (frontend/.gitignore covers the rest)
+node_modules/
+
+# generated artefacts (rebuild with scripts/build_index.py)
+data/index/
+
+# local course material and working notes (course slides/lectures are not ours to publish)
+.wiki/
+
+# AI-assistant workspace config and instructions (local tooling, not part of the app)
+.claude/
+CLAUDE.md
+
+# design hand-off from Claude Design: already ported into frontend/src/styles, kept locally only
+/ScamShield TH.html
+/ScamShield TH Board.html
+/UI mockups for web application.zip
+docs/design-brief.md
+docs/nocturne-readme.md
+
+# editor / os
+.vscode/
+.DS_Store
+Thumbs.db

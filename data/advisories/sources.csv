@@ -1,0 +1,28 @@
+id,url,source,scam_types
+scb-fake-tax-officer,https://www.scb.co.th/th/personal-banking/fraud-fighter/update-fraud/fake-tax-officer/,ธนาคารไทยพาณิชย์,gov_impersonation
+bbl-job-investment,https://www.bangkokbank.com/th-TH/Personal/Grow-Club/online-job-investment-scams,ธนาคารกรุงเทพ,job_task|investment
+rd-warning-115,https://www.rd.go.th/region/07/phitsanulok/115.html,กรมสรรพากร,gov_impersonation
+tpbs-loan-sms,https://www.thaipbs.or.th/news/content/321874,Thai PBS,fake_bank_or_loan
+tpbs-verify-loan,https://www.thaipbs.or.th/verify/article/content/12873,Thai PBS Verify,fake_bank_or_loan
+tpbs-nbtc-impersonation,https://www.thaipbs.or.th/now/content/989,Thai PBS,gov_impersonation|phishing_link
+tpbs-sms-fake-link,https://www.thaipbs.or.th/now/content/1723,Thai PBS,phishing_link
+tpbs-romance,https://www.thaipbs.or.th/now/content/1927,Thai PBS,romance
+tpbs-digital-money,https://www.thaipbs.or.th/sciandtech/tech/1380,Thai PBS,gov_impersonation|phishing_link
+ais-points-scam,https://thaipublica.org/2024/12/ais-pr-18122024/,AIS (ผ่าน ThaiPublica),prize_lottery|phishing_link
+tpbs-verify-pea,https://www.thaipbs.or.th/verify/news/content/5328,Thai PBS Verify,gov_impersonation
+thpost-parcel-sms,https://www.thebangkokinsight.com/news/politics-general/general/955432/,ไปรษณีย์ไทย (ผ่าน The Bangkok Insight),fake_parcel
+sec-check-first,https://www.infoquest.co.th/?p=195449,ก.ล.ต. (ผ่าน InfoQuest),investment
+tpbs-fake-bot,https://www.thaipbs.or.th/news/content/270472,Thai PBS,gov_impersonation|fake_bank_or_loan
+thairath-job-task,https://www.thairath.co.th/news/crime/2917858,ตำรวจไซเบอร์ (ผ่านไทยรัฐ),job_task
+infoquest-hybrid-scam,https://www.infoquest.co.th/?p=468654,InfoQuest,romance|investment
+thairath-bbl-sms-email,https://www.thairath.co.th/money/personal_finance/finance_banking/2010900,ธนาคารกรุงเทพ (ผ่านไทยรัฐ),fake_bank_or_loan|phishing_link
+matichon-loan-8-ways,https://www.matichon.co.th/local/news_4065605,มติชน,fake_bank_or_loan
+pptv-fake-loan-app,https://www.pptvhd36.com/wealth/trick-trend/155937,PPTV,fake_bank_or_loan
+infoquest-fake-app,https://www.infoquest.co.th/?p=268415,ธปท. (ผ่าน InfoQuest),phishing_link|fake_bank_or_loan
+standard-oil-sms,https://thestandard.co/police-warn-scam-oil-sms/,ตำรวจ (ผ่าน THE STANDARD),prize_lottery|phishing_link
+dailynews-nbtc-gambling,https://www.dailynews.co.th/articles/433798/,กสทช. (ผ่านเดลินิวส์),gambling
+infoquest-ais-sms-gang,https://www.infoquest.co.th/?p=520087,AIS และตำรวจไซเบอร์ (ผ่าน InfoQuest),phishing_link
+tpbs-verify-8663,https://www.thaipbs.or.th/verify/article/content/8663,Thai PBS Verify,other
+
+naewna-fake-links,https://www.naewna.com/local/815700,สำนักงานตำรวจแห่งชาติ (ผ่านแนวหน้า),fake_parcel|phishing_link
+tpbs-verify-2362,https://www.thaipbs.or.th/verify/article/content/2362,Thai PBS Verify,gov_impersonation

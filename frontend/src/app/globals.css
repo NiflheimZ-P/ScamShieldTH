@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import "../styles/nocturne.css";
+@import "../styles/scamshield.css";
+
+/* Expose the Nocturne tokens as Tailwind utilities (bg-surface, text-accent, rounded-md, ...).
+   `reference` makes utilities read the Nocturne vars without re-emitting them; the values here are
+   only fallbacks — nocturne.css is the source of truth. */
+@theme reference {
+  --color-bg: #161826;
+  --color-surface: #232532;
+  --color-text: #e9e9ed;
+  --color-accent: #9184d9;
+  --color-divider: #e9e9ed29;
+
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+}
+
