@@ -30,6 +30,9 @@ CLAUDE.md
 docs/design-brief.md
 docs/nocturne-readme.md
 
+# report draft: the PDF is submitted separately
+docs/report/
+
 # editor / os
 .vscode/
 .DS_Store
