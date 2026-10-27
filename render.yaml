@@ -7,7 +7,8 @@ services:
     plan: free
     region: singapore
     # data/index/ is git-ignored, so the advisory index is rebuilt on every deploy (calls the proxy, ~1 min).
-    buildCommand: pip install uv && cd backend && uv sync --frozen --no-dev && uv run --no-sync python -m scripts.build_index
+    # unset: Render sets UV_NO_MANAGED_PYTHON, and uv refuses it together with UV_PYTHON_PREFERENCE.
+    buildCommand: unset UV_PYTHON_PREFERENCE && pip install uv && cd backend && uv sync --frozen --no-dev && uv run --no-sync python -m scripts.build_index
     startCommand: cd backend && .venv/bin/uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/health
     envVars:
@@ -15,4 +16,3 @@ services:
         sync: false # asked for once in the Render dashboard; never committed
       - key: PYTHON_VERSION
         value: 3.12.8
-# Render already sets UV_NO_MANAGED_PYTHON (uv uses Render's Python); don't add UV_PYTHON_PREFERENCE, uv rejects both.
