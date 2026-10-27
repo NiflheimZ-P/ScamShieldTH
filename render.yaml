@@ -1,0 +1,19 @@
+# Render Blueprint for the backend (free web service). The frontend goes on Vercel with BACKEND_URL set to this
+# service's URL — see README "Deploy". Root dir stays at the repo root because the backend reads ../data.
+services:
+  - type: web
+    name: scamshield-th-api
+    runtime: python
+    plan: free
+    region: singapore
+    # data/index/ is git-ignored, so the advisory index is rebuilt on every deploy (calls the proxy, ~1 min).
+    buildCommand: pip install uv && cd backend && uv sync --frozen --no-dev && uv run --no-sync python -m scripts.build_index
+    startCommand: cd backend && .venv/bin/uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false # asked for once in the Render dashboard; never committed
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: UV_PYTHON_PREFERENCE
+        value: only-system # use Render's Python, not a uv-downloaded one outside the deployed folder

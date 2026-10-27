@@ -101,6 +101,19 @@ Port 8000 taken? Start uvicorn with `--port 8001` and set `BACKEND_URL=http://12
 CI (`.github/workflows/ci.yml`) runs the offline checks on every push: ruff + pytest for the backend, and
 tsc + eslint + `next build` for the frontend. It never calls the proxy.
 
+## Deploy (Render free + Vercel)
+The API key stays on the backend: the browser only talks to Vercel, which proxies `/api/*` to Render.
+
+1. **Backend on Render** — New → Blueprint → pick this repo. `render.yaml` sets the build (installs deps and
+   rebuilds the advisory index, which calls the proxy), the start command and the health check. Enter
+   `OPENAI_API_KEY` when asked. Check `https://<service>.onrender.com/api/health` returns `{"status":"ok"}`.
+2. **Frontend on Vercel** — import the repo, Root Directory `frontend`, env `BACKEND_URL=https://<service>.onrender.com`
+   and `NEXT_PUBLIC_SCAN_MOCK=0`.
+
+The free instance sleeps after ~15 min idle; open `/api/health` a minute before a demo. `/api/scan` and
+`/api/extract-text` are rate-limited (8 per client per minute, 200 per hour overall; `RATE_LIMIT_PER_MINUTE`,
+`RATE_LIMIT_PER_HOUR`, 0 disables) so a public link cannot drain the shared course quota.
+
 ## Data
 | Path | What | Committed |
 |---|---|---|
