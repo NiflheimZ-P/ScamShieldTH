@@ -2,9 +2,10 @@
 
 import logging
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 
+from app.api.rate_limit import rate_limit
 from app.api.schemas import ExtractTextRequest, ExtractTextResponse, ScanRequest
 from app.services.extract_service import BadImageError, ExtractService
 from app.services.scan_service import ScanService
@@ -18,7 +19,7 @@ async def health() -> dict:
     return {"status": "ok"}
 
 
-@router.post("/scan")
+@router.post("/scan", dependencies=[Depends(rate_limit)])
 async def scan(req: ScanRequest) -> StreamingResponse:
     service = ScanService()
     return StreamingResponse(
@@ -28,7 +29,7 @@ async def scan(req: ScanRequest) -> StreamingResponse:
     )
 
 
-@router.post("/extract-text")
+@router.post("/extract-text", dependencies=[Depends(rate_limit)])
 async def extract_text(req: ExtractTextRequest) -> ExtractTextResponse:
     try:
         text = await ExtractService().extract_text(req.image)

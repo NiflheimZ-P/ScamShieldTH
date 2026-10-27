@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     agent_max_steps: int = 6
     verdict_max_repairs: int = 2
     retrieval_mode: str = "hybrid"  # dense | bm25 | hybrid — hybrid won on the dev split, see eval/run_retrieval.py
+    rate_limit_per_minute: int = 8  # per client on /scan and /extract-text; 0 disables — app/api/rate_limit.py
+    rate_limit_per_hour: int = 200  # global cap: a public deploy shares the course key's quota
     min_score: float = 0.40  # dense-cosine gate, chosen on the dev split (R@3 0.773 vs 0.636 at 0.45) — eval/run_retrieval.py
 
 
