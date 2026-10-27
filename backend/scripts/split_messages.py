@@ -5,6 +5,9 @@
 Why: v1 was scored on all real messages and exposed false positives on genuine messages with links. Fixing that
 by looking at the same messages would make the re-test meaningless, so the real set is split once (seeded,
 stratified by scam_type) — fixes are developed on `dev.jsonl` only and `test.jsonl` is scored once at the end.
+
+Messages collected after the split carry `"batch": 2`. They were never looked at while tuning, so they go straight
+to test; re-splitting everything would move already-tuned-on dev messages into test.
 """
 
 import argparse
@@ -24,7 +27,9 @@ def main() -> None:
     a = ap.parse_args()
 
     msgs = get_settings().data_dir / "messages"
-    real = [json.loads(line) for line in a.source.read_text(encoding="utf-8").splitlines() if line.strip()]
+    rows = [json.loads(line) for line in a.source.read_text(encoding="utf-8").splitlines() if line.strip()]
+    real = [r for r in rows if r.get("batch", 1) == 1]
+    late = [r for r in rows if r.get("batch", 1) != 1]
     synthetic = [json.loads(line) for line in (msgs / "dev.jsonl").read_text(encoding="utf-8").splitlines()
                  if line.strip() and json.loads(line)["id"].startswith("dev-0")]  # the 9 hand-made dev items
 
@@ -44,6 +49,7 @@ def main() -> None:
 
     for r in dev_real:
         r["split"] = "dev"
+    test += late
     test.sort(key=lambda r: r["id"])
     dev_real.sort(key=lambda r: r["id"])
     (msgs / "dev.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in synthetic + dev_real),

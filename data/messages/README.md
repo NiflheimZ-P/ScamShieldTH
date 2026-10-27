@@ -4,11 +4,12 @@ One JSON object per line. Fields: `id`, `split`, `channel`, `message`, `is_scam`
 
 | File | Use | Rule |
 |---|---|---|
-| `real.jsonl` | all 53 real messages (PII redacted) | source of the split below; scored once as "v1" |
+| `real.jsonl` | all 61 real messages (PII redacted) | source of the split below; the first 53 were scored once as "v1" |
 | `dev.jsonl` | 9 synthetic + 26 real — prompt iteration, knob choice | may be looked at and tuned on freely |
-| `test.jsonl` | 27 real — the reported numbers | never used to write prompts, brand lists or pick knobs |
+| `test.jsonl` | 35 real (27 from the split + 8 batch-2) — the reported numbers | never used to write prompts, brand lists or pick knobs |
 
-The split is made by `backend/scripts/split_messages.py` (seeded, stratified by scam_type). It exists because the
+The split is made by `backend/scripts/split_messages.py` (seeded, stratified by scam_type). Messages collected later
+carry `"batch": 2` and go straight to test (never seen during tuning). The split exists because the
 v1 run on all real messages was used to diagnose false positives; see `backend/eval/results/v1/README.md`.
 Labels marked `label_basis: "user judgement"` come from the person who received the message, not from a domain check.
 
