@@ -7,27 +7,34 @@ recommended actions — with citations to official Thai warnings.
 Capstone for *Building LLM-Powered Applications* (KMITL). All LLM calls go through the class proxy
 (`gemma-4-E4B-it` for chat and vision, `bge-m3` for embeddings), from the backend only.
 
-## Results (held-out test set: 27 real messages — 17 scam, 10 genuine)
+## Results (held-out test set: 35 real messages — 23 scam, 12 genuine)
 
 | System | Scams caught | Genuine flagged | Flag precision | Flag F1 | Type accuracy | Type macro-F1 |
 |---|---|---|---|---|---|---|
-| **Baseline** — zero-shot gemma, no tools, no retrieval | 17/17 | 3/10 | 0.850 | 0.919 | 0.778 | 0.667 |
-| Agent, no RAG (URL / indicator tools + brand–link precheck) | 17/17 | **1/10** | **0.944** | **0.971** | 0.778 | 0.626 |
-| **Agent + RAG** (what the app runs) | 17/17 | 2/10 | 0.895 | 0.944 | **0.815** | **0.740** |
+| **Baseline** — zero-shot gemma, no tools, no retrieval | 23/23 | 4/12 | 0.852 | 0.920 | 0.743 | 0.648 |
+| Agent, no RAG (URL / indicator tools + brand–link precheck) | 23/23 | **2/12** | **0.920** | **0.958** | **0.771** | 0.691 |
+| **Agent + RAG** (what the app runs) | 23/23 | 3/12 | 0.885 | 0.939 | 0.743 | **0.692** |
 
 "Flagged" = risk medium or high, i.e. what the user sees as a warning. Before the fixes described below, the agent
-flagged **17 of 19** genuine messages (v1, `backend/eval/results/v1/`). With 27 messages, one message is ~4–10
-points: read the counts, not just the ratios.
+flagged **17 of 19** genuine messages (v1, `backend/eval/results/v1/`). With 35 messages, one message is ~3–8
+points: read the counts, not just the ratios. The baseline also had one unparseable verdict (counted as not flagged).
+
+The test set grew from 27 to 35 with 8 messages collected after all tuning (`"batch": 2`). On the original 27 the flag
+counts reproduced exactly (3 / 1 / 2 genuine flagged); type accuracy moved by at most one message between runs. The
+new 8 lowered type accuracy for the RAG agent (4/8): it is the deployed variant, but on this set the no-RAG agent is
+as good or better on every metric — reported as found, not re-tuned on test.
 
 **Retrieval** (query = raw message, document-level, test split):
 
 | Setting | Recall@3 | MRR | Genuine messages that retrieve any warning |
 |---|---|---|---|
-| Dense, no score gate (naive default) | 0.824 | 0.736 | 100 % |
-| Dense / hybrid, `min_score` 0.40 (chosen on dev) | 0.824 | 0.736 / 0.723 | **90 %** |
-| `min_score` 0.45 (previous default) | 0.765 | 0.677 | 90 % |
+| Dense, no score gate (naive default) | 0.696 | 0.616 | 100 % |
+| **Dense, `min_score` 0.40** (chosen on dev) | 0.696 | 0.616 | **92 %** |
+| Dense, `min_score` 0.45 (previous default) | 0.652 | 0.573 | 92 % |
+| Hybrid BM25 + RRF, `min_score` 0.40 (app default) | 0.609 | 0.557 | 92 % |
 
-Hybrid BM25 + RRF beat dense on the dev split (R@3 0.773 vs 0.591) but tied on test — reported as found.
+Hybrid beat dense on the dev split (R@3 0.773 vs 0.591), tied on the first 27 test messages, and loses on the full
+35 (0.609 vs 0.696) — reported as found; the default was chosen on dev and is not switched on test.
 
 **Method.** The 53 real messages (`data/messages/real.jsonl`, from the author's phone, PII redacted) were first
 scored as v1, which exposed the false positives. To fix them without contaminating the score, the set was split once
@@ -35,8 +42,9 @@ scored as v1, which exposed the false positives. To fix them without contaminati
 was scored once at the end.
 
 **Known failures.** A genuine insurance-claim SMS with an unknown `.cc` link that asks for ID digits is flagged
-high; a genuine loan-contract SMS is flagged once loan-scam advisories are retrieved; gambling ads are sometimes
-typed as prizes. Details in the report.
+high; a genuine loan-contract SMS is flagged once loan-scam advisories are retrieved; a genuine Amazon sign-in code
+(`amazon.co.jp`) is flagged by all three systems because Amazon is not in `brands.csv`; gambling ads written with
+look-alike characters (`ถoนไว`, `llตกง่าย`) are still flagged but typed as prize, phishing or investment. Details in the report.
 
 ## Architecture
 
@@ -92,7 +100,7 @@ pnpm dev                                  # http://localhost:3000
 | Path | What | Committed |
 |---|---|---|
 | `data/advisories/` | 26 official scam warnings: `sources.csv` (URLs), `raw/*.txt`, `advisories.jsonl` (metadata) | yes |
-| `data/messages/` | 53 real messages (`real.jsonl`) split into `dev.jsonl` (tuning) and `test.jsonl` (reported) | yes |
+| `data/messages/` | 61 real messages (`real.jsonl`) split into `dev.jsonl` (tuning) and `test.jsonl` (reported) | yes |
 | `data/indicators/` | `seed.csv` official domains + hotlines, `brands.csv` brand names ↔ official domains | yes |
 | `data/index/` | vector index + SQLite, rebuilt by `scripts.build_index` | no (generated) |
 
@@ -107,12 +115,13 @@ uv run python -m eval.run_eval --split test --mode agent_norag   # + inspect_url
 uv run python -m eval.run_eval --split test --mode agent         # + search_advisories (RAG)
 uv run python -m eval.run_retrieval --split test [--size 300]    # dense vs BM25 vs hybrid, min_score sweep
 ```
+On Windows, set `PYTHONIOENCODING=utf-8` when redirecting the output to a file.
 All runs use `temperature=0`; the proxy is not perfectly deterministic, so a rerun can move a message or two.
 The proxy caps tokens per short window — the eval waits and retries on HTTP 429. Per-item results and logs are in
 `backend/eval/results/`.
 
 ## Limitations
-- 53 labelled messages from one person's phone; some labels rest on the recipient's judgement (`label_basis`).
+- 61 labelled messages from one person's phone; some labels rest on the recipient's judgement (`label_basis`).
 - No database of reported scam numbers/links yet — `check_indicator` knows official channels only.
 - `brands.csv` covers 30 brands; a genuine message from an unlisted brand on an unknown domain is judged on content alone.
 - Screenshot reading (gemma vision) misreads some Thai words, so the text is shown for review before scanning.
