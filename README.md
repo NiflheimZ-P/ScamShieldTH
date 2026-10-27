@@ -95,6 +95,11 @@ cd frontend
 pnpm install
 pnpm dev                                  # http://localhost:3000
 ```
+Port 8000 taken? Start uvicorn with `--port 8001` and set `BACKEND_URL=http://127.0.0.1:8001` in
+`frontend/.env.local` — the frontend proxies `/api/*` to that URL.
+
+CI (`.github/workflows/ci.yml`) runs the offline checks on every push: ruff + pytest for the backend, and
+tsc + eslint + `next build` for the frontend. It never calls the proxy.
 
 ## Data
 | Path | What | Committed |
